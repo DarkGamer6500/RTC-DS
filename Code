@@ -24,7 +24,7 @@ void setup() {
     //Serial.print("error"); // diagnostic porpouses only
     while (1);         // bucle infinito que detiene ejecucion del programa
   }
-  //rtc.adjust(DateTime(__DATE__, __TIME__));  // funcion que permite establecer fecha y horario
+  rtc.adjust(DateTime(__DATE__, __TIME__));  // funcion que permite establecer fecha y horario
   // al momento de la compilacion. Comentar esta linea
   // y volver a subir para normal operacion
 }
