@@ -1,0 +1,64 @@
+// CODIGO: DGamer6500                               DUDAS: Hell#0926 (DISCORD)
+// BASADO EN: Bitwise Ar (Caps 38 y 58)             LIBRERIA CUSTOM 1637: https://github.com/avishorp/TM1637 
+
+#include <TM1637Display.h>    // incluye libreria TM1637
+#include <Wire.h>    // incluye libreria para interfaz I2C
+#include <RTClib.h>   // incluye libreria para el manejo del modulo RTC
+
+#define CLK 2       // CLK a pin 2
+#define DIO 3       // DIO a pin 3
+
+bool evento_inicio = true;  // variable de control para inicio de evento con valor true
+bool evento_fin = true;   // variable de control para finalizacion de evento con valor true
+
+TM1637Display display(CLK, DIO);  // crea objeto
+RTC_DS3231 rtc;     // crea objeto
+
+void setup() {
+  //Serial.begin(9600); // diagnostic porpouses only
+  display.setBrightness(1);   // establece nivel de brillo
+  evento_inicio = true;        // variables de control en verdadero
+  evento_fin = true;
+
+  if (! rtc.begin()) {       // si falla la inicializacion del modulo
+    //Serial.print("error"); // diagnostic porpouses only
+    while (1);         // bucle infinito que detiene ejecucion del programa
+  }
+  //rtc.adjust(DateTime(__DATE__, __TIME__));  // funcion que permite establecer fecha y horario
+  // al momento de la compilacion. Comentar esta linea
+  // y volver a subir para normal operacion
+}
+
+
+void loop() {
+  //Serial.print("OK"); // diagnostic porpouses only
+  DateTime fecha = rtc.now();      // funcion que devuelve fecha y horario en formato
+  display.showNumberDecEx(fecha.hour(), 0b01000000, false, 2, 0);  // muestra hora y enciende
+  // los dos puntos separadores con el (1) en los bits del binario
+  display.showNumberDec(fecha.minute(), true, 2, 2);    // muestra minutos (valor true para ceros precedentes)
+  delay(1000);       // demora de 100 milisegundos
+
+  if ( fecha.hour() >= 23 || fecha.hour() < 7 ) { // cuando la hora sea igual o mayor a 23 y menor a 7 devuelve true
+    if ( evento_inicio == true ) {    // si evento_inicio es verdadero
+      display.setBrightness(1);   // establece nivel de brillo a 1
+      if ( evento_fin = false ) {
+        evento_fin == true;
+      }
+      evento_inicio = false;        // carga valor falso en variable de control
+      delay(1000);           // para evitar ingresar mas de una vez + delay
+    }
+  }
+
+
+  if ( fecha.hour() >= 7  && fecha.hour() < 23 ) { // cuando la hora sea igual o mayor a 7 y menor a 23 devuelve true
+    if ( evento_fin == true ) {       // si evento_fin es verdadero
+      display.setBrightness(5);   // establece nivel de brillo
+      if ( evento_inicio = false ) {
+        evento_inicio == true;
+      }
+      evento_fin = false;       // carga valor falso en variable de control
+      delay(1000);           // para evitar ingresar mas de una vez + delay
+    }
+  }
+
+}
