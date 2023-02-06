@@ -42,7 +42,7 @@ void loop() {
     if ( evento_inicio == true ) {    // si evento_inicio es verdadero
       display.setBrightness(1);   // establece nivel de brillo a 1
       if ( evento_fin == false ) {
-        evento_fin == true;
+        evento_fin = true;
       }
       evento_inicio = false;        // carga valor falso en variable de control
       delay(1000);           // para evitar ingresar mas de una vez + delay
@@ -54,7 +54,7 @@ void loop() {
     if ( evento_fin == true ) {       // si evento_fin es verdadero
       display.setBrightness(5);   // establece nivel de brillo
       if ( evento_inicio == false ) {
-        evento_inicio == true;
+        evento_inicio = true;
       }
       evento_fin = false;       // carga valor falso en variable de control
       delay(1000);           // para evitar ingresar mas de una vez + delay
