@@ -41,7 +41,7 @@ void loop() {
   if ( fecha.hour() >= 23 || fecha.hour() < 7 ) { // cuando la hora sea igual o mayor a 23 y menor a 7 devuelve true
     if ( evento_inicio == true ) {    // si evento_inicio es verdadero
       display.setBrightness(1);   // establece nivel de brillo a 1
-      if ( evento_fin = false ) {
+      if ( evento_fin == false ) {
         evento_fin == true;
       }
       evento_inicio = false;        // carga valor falso en variable de control
@@ -53,7 +53,7 @@ void loop() {
   if ( fecha.hour() >= 7  && fecha.hour() < 23 ) { // cuando la hora sea igual o mayor a 7 y menor a 23 devuelve true
     if ( evento_fin == true ) {       // si evento_fin es verdadero
       display.setBrightness(5);   // establece nivel de brillo
-      if ( evento_inicio = false ) {
+      if ( evento_inicio == false ) {
         evento_inicio == true;
       }
       evento_fin = false;       // carga valor falso en variable de control
